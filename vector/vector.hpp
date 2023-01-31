@@ -23,7 +23,7 @@ namespace ft{
         typedef iterator<T>                             iterator;
         //typedef iterator<const T>                     const_iterator;
         typedef size_t                                  size_type;
-        typedef ptrdiff_t                                  difference_type;
+        typedef ptrdiff_t                               difference_type;
         typedef T                                       value_type;
         typedef typename Allocator::pointer             pointer;
         typedef typename Allocator::const_pointer       const_pointer;
@@ -56,6 +56,8 @@ namespace ft{
                         first++;
                     }
             }
+            value_type operator[](difference_type index)
+            {return (_array[index]);}
         private:
             allocator_type  _allocator;
             pointer        _array;
