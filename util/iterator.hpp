@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef V_hpp
-#define V_hpp
+#ifndef ITER_hpp
+#define ITER_hpp
 
 #include "iterator_traits.hpp"
 namespace ft{
@@ -24,48 +24,49 @@ namespace ft{
         typedef typename iterator_traits<T *>::pointer                  pointer;
         typedef typename iterator_traits<T *>::reference                reference; 
         public:
-            iterator() {ptr = NULL;}
-            iterator(pointer p){ptr = p;}
-            iterator(iterator& p){*this = p;}
+            iterator() {_ptr = NULL;}
+            iterator(pointer p){_ptr = p;}
+            iterator(const iterator& p){*this = p;}
+            ~iterator(){}
             T& operator=(const iterator& to_copy){
-                ptr = to_copy.ptr;
+                _ptr = to_copy._ptr;
                 return (*this);}
-            bool operator==(iterator &a){return ptr == a.ptr;}
-            bool operator!=(iterator a){return ptr != a.ptr;}
-            bool operator<(iterator &a){return ptr < a.ptr;}
-            bool operator>(iterator &a){return ptr > a.ptr;}
-            bool operator<=(iterator &a){return ptr <= a.ptr;}
-            bool operator>=(iterator &a){return ptr >= a.ptr;}
-            pointer operator->(){return (ptr);}
-            reference operator*(){return (*ptr);}
+            bool operator==(iterator &a){return _ptr == a._ptr;}
+            bool operator!=(iterator a){return _ptr != a._ptr;}
+            bool operator<(iterator &a){return _ptr < a._ptr;}
+            bool operator>(iterator &a){return _ptr > a._ptr;}
+            bool operator<=(iterator &a){return _ptr <= a._ptr;}
+            bool operator>=(iterator &a){return _ptr >= a._ptr;}
+            pointer operator->(){return (_ptr);}
+            reference operator*(){return (*_ptr);}
             iterator& operator+(int i){
-                ptr += i;
+                _ptr += i;
                 return (*this);}
             iterator& operator-(int i){
-                ptr -= i;
+                _ptr -= i;
                 return (*this);}
             iterator& operator+(iterator& i){
-                ptr += i.ptr;
+                _ptr += i._ptr;
                 return (*this);}
             iterator& operator-(iterator& i){
-                ptr -= i.ptr;
+                _ptr -= i._ptr;
                 return (*this);}
             iterator& operator++(){
-                ptr++;
+                _ptr++;
                 return (*this);}
             iterator operator++(int){
                 iterator temp = *this;
-                ++ptr;
+                ++_ptr;
                 return (temp);}
             iterator& operator--(){
-                ptr--;
+                _ptr--;
                 return (*this);}
             iterator operator--(int){
                 iterator temp = *this;
-                --ptr;
+                --_ptr;
                 return (temp);}
         private:
-            pointer ptr;
+            pointer _ptr;
     };
 }
 

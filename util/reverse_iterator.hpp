@@ -15,58 +15,58 @@
 
 #include "iterator_traits.hpp"
 namespace ft{
-    template <class Iterator>
-    class reverse_iterator:
-    {
-        typedef typename iterator_traits<T *>::value_type               value_type;
-        typedef typename iterator_traits<T *>::difference_type          difference_type;
-        typedef typename iterator_traits<T *>::iterator_category        iterator_category;
-        typedef typename iterator_traits<T *>::pointer                  pointer;
-        typedef typename iterator_traits<T *>::reference                reference;
+    template <class T>
+    class reverse_iterator{
+        typedef typename iterator_traits<T *>::value_type         value_type;
+        typedef typename iterator_traits<T *>::difference_type    difference_type;
+        typedef typename iterator_traits<T *>::iterator_category  iterator_category;
+        typedef typename iterator_traits<T *>::pointer            pointer;
+        typedef typename iterator_traits<T *>::reference          reference;
         public:
-            reverse_iterator() {ptr = NULL;}
-            reverse_iterator(pointer p){ptr = p;}
-            reverse_iterator(reverse_iterator& p){*this = p;}
+            reverse_iterator() {_ptr = NULL;}
+            reverse_iterator(pointer p){_ptr = p;}
+            reverse_iterator(const reverse_iterator& p){*this = p;}
+            ~reverse_iterator(){}
             T& operator=(const reverse_iterator& to_copy){
-                ptr = to_copy.ptr;
+                _ptr = to_copy._ptr;
                 return (*this);}
-            bool operator==(reverse_iterator &a){return ptr == a.ptr;}
-            bool operator!=(reverse_iterator a){return ptr != a.ptr;}
-            bool operator<(reverse_iterator &a){return ptr < a.ptr;}
-            bool operator>(reverse_iterator &a){return ptr > a.ptr;}
-            bool operator<=(reverse_iterator &a){return ptr <= a.ptr;}
-            bool operator>=(reverse_iterator &a){return ptr >= a.ptr;}
-            pointer operator->(){return (ptr);}
-            reference operator*(){return (*ptr);}
+            bool operator==(reverse_iterator &a){return _ptr == a._ptr;}
+            bool operator!=(reverse_iterator a){return _ptr != a._ptr;}
+            bool operator<(reverse_iterator &a){return _ptr < a._ptr;}
+            bool operator>(reverse_iterator &a){return _ptr > a._ptr;}
+            bool operator<=(reverse_iterator &a){return _ptr <= a._ptr;}
+            bool operator>=(reverse_iterator &a){return _ptr >= a._ptr;}
+            pointer operator->(){return (_ptr);}
+            reference operator*(){return (*_ptr);}
             reverse_iterator& operator+(int i){
-                ptr += i;
+                _ptr += i;
                 return (*this);}
             reverse_iterator& operator-(int i){
-                ptr -= i;
+                _ptr -= i;
                 return (*this);}
             reverse_iterator& operator+(reverse_iterator& i){
-                ptr -= i.ptr;
+                _ptr -= i._ptr;
                 return (*this);}
             reverse_iterator& operator-(reverse_iterator& i){
-                ptr += i.ptr;
+                _ptr += i._ptr;
                 return (*this);}
             reverse_iterator& operator++(){
-                ptr--;
+                _ptr--;
                 return (*this);}
             reverse_iterator operator++(int){
                 reverse_iterator temp = *this;
-                --ptr;
+                --_ptr;
                 return (temp);}
             reverse_iterator& operator--(){
-                ptr++;
+                _ptr++;
                 return (*this);}
             reverse_iterator operator--(int){
                 reverse_iterator temp = *this;
-                ++ptr;
+                ++_ptr;
                 return (temp);}
         private:
-            pointer ptr;
-    }
+            pointer _ptr;
+    };
 }
 
 #endif
