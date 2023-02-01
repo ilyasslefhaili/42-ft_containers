@@ -32,17 +32,17 @@ namespace ft{
         //typedef reverse_iterator<const_iterator>      const_reverse_iterator;
         public:
             explicit vector (const allocator_type& alloc = allocator_type()){
-                _size = 0;
+                _capacity = _size = 0;
                 _allocator = alloc;
                 _array = _allocator.allocate(0);
             }
             explicit vector(size_type size, const allocator_type& alloc = allocator_type()){
-                _size = size;
+                _capacity = _size = size;
                 _allocator = alloc;
                 _array = _allocator.allocate(size);
             }
             vector (const vector& x, const allocator_type& alloc = allocator_type()){
-                _size = x._size;
+                _capacity = _size = x._size;
                 _allocator = alloc;
                 _array = _allocator.allocate(x.size());
                 for (difference_type i = 0; i < x.size();i++)
@@ -51,7 +51,7 @@ namespace ft{
             template<class InputIterator>
             vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
                 difference_type len = std::distance(first, last);
-                _size = len;
+                _capacity = _size = len;
                 _allocator = alloc;
                 _array = _allocator.allocate(len);
                 for (difference_type i = 0;i < len;i++){
@@ -59,13 +59,44 @@ namespace ft{
                         first++;
                     }
             }
+            value_type operator[](difference_type index){
+                return (_array[index]);
+            }
+            //void assign(size_type n, const T& u){}
+            void pop_back(){
+                _allocator.destroy(&_array[_size - 1]);
+                _size -= 1;
+            }
+            void push_back(const value_type& val){
+                pointer temp = _array;
+                if (_size == _capacity)
+                {
+                    if (_capacity == 0)
+                        _capacity += 1;
+                    _capacity *= 2;
+                    _array = _allocator.allocate(_capacity);
+                    for (size_type i = 0;i < _size;i++)
+                    {
+                        _allocator.construct(&_array[i], temp[i]);
+                        _allocator.destroy(&temp[i]);
+                    }
+                    _allocator.construct(&_array[_size], val);
+                    _size += 1;
+                    _allocator.deallocate(temp, _size - 1);
+                }
+                else
+                {
+                    _allocator.construct(&_array[_size], val);
+                    _size += 1;
+                }
+            }
+
             ~vector(){
                 for (size_type i = 0;i < _size; i++)
                     _allocator.destroy(&_array[i]);
                 _allocator.deallocate(_array, _size);
             }
-            value_type operator[](difference_type index){
-                return (_array[index]);}
+          
         private:
             allocator_type  _allocator;
             pointer        _array;
