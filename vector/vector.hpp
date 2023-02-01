@@ -32,14 +32,17 @@ namespace ft{
         //typedef reverse_iterator<const_iterator>      const_reverse_iterator;
         public:
             explicit vector (const allocator_type& alloc = allocator_type()){
+                _size = 0;
                 _allocator = alloc;
                 _array = _allocator.allocate(0);
             }
             explicit vector(size_type size, const allocator_type& alloc = allocator_type()){
+                _size = size;
                 _allocator = alloc;
                 _array = _allocator.allocate(size);
             }
             vector (const vector& x, const allocator_type& alloc = allocator_type()){
+                _size = x._size;
                 _allocator = alloc;
                 _array = _allocator.allocate(x.size());
                 for (difference_type i = 0; i < x.size();i++)
@@ -48,16 +51,21 @@ namespace ft{
             template<class InputIterator>
             vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
                 difference_type len = std::distance(first, last);
+                _size = len;
                 _allocator = alloc;
                 _array = _allocator.allocate(len);
-                for (difference_type i = 0;i < len;i++)
-                    {
+                for (difference_type i = 0;i < len;i++){
                         _allocator.construct(&_array[i], *first);
                         first++;
                     }
             }
-            value_type operator[](difference_type index)
-            {return (_array[index]);}
+            ~vector(){
+                for (size_type i = 0;i < _size; i++)
+                    _allocator.destroy(&_array[i]);
+                _allocator.deallocate(_array, _size);
+            }
+            value_type operator[](difference_type index){
+                return (_array[index]);}
         private:
             allocator_type  _allocator;
             pointer        _array;
