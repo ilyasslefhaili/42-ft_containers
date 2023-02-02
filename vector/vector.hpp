@@ -64,7 +64,6 @@ namespace ft{
             value_type operator[](difference_type index){
                 return (_array[index]);
             }
-            //void assign(size_type n, const T& u){}
             //modifiers:
             void pop_back(){
                 _allocator.destroy(&_array[_size - 1]);
