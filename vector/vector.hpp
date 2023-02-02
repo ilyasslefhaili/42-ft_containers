@@ -80,6 +80,8 @@ namespace ft{
                     return (_array[n]);
                 throw (std::out_of_range("std::exception"));
             }
+            reference front(){}
+            const_reference front() const{}
             //////////////////////////
             //modifiers:
             //////////////////////////

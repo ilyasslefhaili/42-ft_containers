@@ -12,7 +12,7 @@
 
 #ifndef TRAITS_HPP
 #define TRAITS_HPP
-
+#include <iostream>
 namespace ft{
     template <class Iterator>
     struct iterator_traits{
@@ -25,7 +25,7 @@ namespace ft{
     template <class T>
     struct iterator_traits<T*>{
         typedef  T                                  value_type;
-        typedef size_t                              difference_type;
+        typedef ptrdiff_t                              difference_type;
         typedef std::random_access_iterator_tag     iterator_category;
         typedef T*                                  pointer;
         typedef T&                                  reference;
@@ -33,7 +33,7 @@ namespace ft{
     template <class T>
     struct iterator_traits<const T*>{
         typedef  T                                  value_type;
-        typedef size_t                              difference_type;
+        typedef ptrdiff_t                              difference_type;
         typedef std::random_access_iterator_tag     iterator_category;
         typedef const T*                            pointer;
         typedef const T&                            reference;
