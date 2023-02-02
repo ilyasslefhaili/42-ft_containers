@@ -61,9 +61,9 @@ namespace ft{
                     }
             }
             //element access:
-            value_type operator[](difference_type index){
-                return (_array[index]);
-            }
+            reference operator[](size_type index){return (_array[index]);}
+            const_reference operator[](size_type index) const {return (_array[index]);}
+            
             //modifiers:
             void pop_back(){
                 _allocator.destroy(&_array[_size - 1]);
