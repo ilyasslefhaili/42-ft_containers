@@ -7,13 +7,11 @@ int main()
         //     std::cout<<v.size()<<"     "<<i<<std::endl;
         //     v.push_back(45.0123);
         // }
-        try 
-        {
-        v.resize(v.max_size() + 1, 9.000);
-        }
-        catch (std::exception e)
-        {
-                std::cout<<e.what()<<std::endl;
-        }
-        std::cout<<v.size()<<std::endl;
+        v.reserve(0);
+        std::cout<<v.capacity()<<std::endl;
+        v.reserve(32);
+        std::cout<<v.capacity()<<std::endl;
+        v.reserve(48);
+        std::cout<<v.capacity()<<std::endl;
+
 }

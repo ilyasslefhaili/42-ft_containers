@@ -116,6 +116,23 @@ namespace ft{
                         this->pop_back();
                 }
             }
+            void reserve(size_type n){
+                if (n > this->max_size())
+                    throw(std::length_error("std::exception"));
+                else if (n > _capacity){
+                    size_type temp_capacity = _capacity;
+                    size_type a = _size;
+                    pointer temp = _array;
+                    _array = _allocator.allocate(n);
+                    _capacity = n;
+                    _size = 0;
+                    for (size_type i = 0;i < a;i++){
+                        this->push_back(temp[i]);
+                        _allocator.destroy(&temp[i]);
+                    }
+                    _allocator.deallocate(temp, temp_capacity);
+                }
+            }
             //destructor:
             ~vector(){
                 for (size_type i = 0;i < _size; i++)
@@ -124,10 +141,10 @@ namespace ft{
             }
           
         private:
-            allocator_type  _allocator;
-            pointer        _array;
-            size_type      _size;
-            size_type      _capacity;  
+            allocator_type      _allocator;
+            pointer             _array;
+            size_type           _size;
+            size_type           _capacity;  
     };
 }
 
