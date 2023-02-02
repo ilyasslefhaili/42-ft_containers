@@ -2,10 +2,18 @@
 #include "vector.hpp"
 int main()
 {
-        const ft::vector<double> v;
+        ft::vector<double> v;
         //  for (int i = 0; i < 266; ++i) {
         //     std::cout<<v.size()<<"     "<<i<<std::endl;
         //     v.push_back(45.0123);
         // }
-        std::cout<<v.max_size()<<std::endl;
+        try 
+        {
+        v.resize(v.max_size() + 1, 9.000);
+        }
+        catch (std::exception e)
+        {
+                std::cout<<e.what()<<std::endl;
+        }
+        std::cout<<v.size()<<std::endl;
 }

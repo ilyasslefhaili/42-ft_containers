@@ -102,7 +102,21 @@ namespace ft{
             size_type size()const{return _size;}
             bool empty() const{return !(_size);}
             size_type max_size() const{return _allocator.max_size();}
-            //destructor
+            void resize (size_type n, value_type val = value_type()){
+                if (_size < n)
+                {
+                    if (n > this->max_size())
+                        throw(std::length_error("std::exception"));
+                    while (_size < n)
+                        this->push_back(val);
+                }
+                else
+                {
+                    while (_size > n)
+                        this->pop_back();
+                }
+            }
+            //destructor:
             ~vector(){
                 for (size_type i = 0;i < _size; i++)
                     _allocator.destroy(&_array[i]);
