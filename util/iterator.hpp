@@ -28,7 +28,7 @@ namespace ft{
             iterator(pointer p){_ptr = p;}
             iterator(const iterator& p){*this = p;}
             ~iterator(){}
-            T& operator=(const iterator& to_copy){
+            iterator& operator=(const iterator& to_copy){
                 _ptr = to_copy._ptr;
                 return (*this);}
             bool operator==(iterator &a){return _ptr == a._ptr;}

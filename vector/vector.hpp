@@ -31,6 +31,7 @@ namespace ft{
         typedef reverse_iterator<iterator>              reverse_iterator;
         //typedef reverse_iterator<const_iterator>      const_reverse_iterator;
         public:
+            //constructors
             explicit vector (const allocator_type& alloc = allocator_type()){
                 _capacity = _size = 0;
                 _allocator = alloc;
@@ -59,18 +60,20 @@ namespace ft{
                         first++;
                     }
             }
+            //element access:
             value_type operator[](difference_type index){
                 return (_array[index]);
             }
             //void assign(size_type n, const T& u){}
+            //modifiers:
             void pop_back(){
                 _allocator.destroy(&_array[_size - 1]);
                 _size -= 1;
             }
             void push_back(const value_type& val){
-                pointer temp = _array;
                 if (_size == _capacity)
                 {
+                    pointer temp = _array;
                     if (_capacity == 0)
                         _capacity += 1;
                     _capacity *= 2;
@@ -81,8 +84,8 @@ namespace ft{
                         _allocator.destroy(&temp[i]);
                     }
                     _allocator.construct(&_array[_size], val);
+                    _allocator.deallocate(temp, _size);
                     _size += 1;
-                    _allocator.deallocate(temp, _size - 1);
                 }
                 else
                 {
@@ -90,11 +93,21 @@ namespace ft{
                     _size += 1;
                 }
             }
-
+            //iterators:
+            iterator begin() { return iterator(_array); }
+            iterator begin() const { return iterator(_array); }
+            iterator end(){return iterator(_array + _size);}
+            iterator end()const{return iterator(_array + _size);}
+            //capacity:
+            size_type capacity()const {return _capacity;}
+            size_type size()const{return _size;}
+            bool empty() const{return !(_size);}
+            size_type max_size() const{return _allocator.max_size();}
+            //destructor
             ~vector(){
                 for (size_type i = 0;i < _size; i++)
                     _allocator.destroy(&_array[i]);
-                _allocator.deallocate(_array, _size);
+                _allocator.deallocate(_array, _capacity);
             }
           
         private:

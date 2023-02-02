@@ -2,20 +2,10 @@
 #include "vector.hpp"
 int main()
 {
-    ft::vector<std::string> e;
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    e.push_back("lksafklj");
-    for (int i = 0;i < 8;i++)
-        std::cout<<e[i]<<std::endl;
-    e.pop_back();
-    e.pop_back();
-    for (int i = 0;i < 8;i++)
-        std::cout<<"sfkjslkf"<<e[i]<<std::endl;
+        const ft::vector<double> v;
+        //  for (int i = 0; i < 266; ++i) {
+        //     std::cout<<v.size()<<"     "<<i<<std::endl;
+        //     v.push_back(45.0123);
+        // }
+        std::cout<<v.max_size()<<std::endl;
 }
