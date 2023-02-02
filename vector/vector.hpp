@@ -18,39 +18,44 @@
 namespace ft{
     template <class T, class Allocator = std::allocator<T> >
     class vector{
-        typedef typename Allocator::reference           reference;
-        typedef typename Allocator::const_reference     const_reference;
-        typedef iterator<T>                             iterator;
-        //typedef iterator<const T>                     const_iterator;
-        typedef size_t                                  size_type;
-        typedef ptrdiff_t                               difference_type;
-        typedef T                                       value_type;
-        typedef typename Allocator::pointer             pointer;
-        typedef typename Allocator::const_pointer       const_pointer;
-        typedef Allocator                               allocator_type;
-        typedef reverse_iterator<iterator>              reverse_iterator;
-        //typedef reverse_iterator<const_iterator>      const_reverse_iterator;
         public:
+            typedef typename Allocator::reference           reference;
+            typedef typename Allocator::const_reference     const_reference;
+            typedef iterator<T>                             iterator;
+            //typedef iterator<const T>                     const_iterator;
+            typedef size_t                                  size_type;
+            typedef ptrdiff_t                               difference_type;
+            typedef T                                       value_type;
+            typedef typename Allocator::pointer             pointer;
+            typedef typename Allocator::const_pointer       const_pointer;
+            typedef Allocator                               allocator_type;
+            typedef reverse_iterator<iterator>              reverse_iterator;
+            //typedef reverse_iterator<const_iterator>      const_reverse_iterator;
+        
+            //////////////////////////
             //constructors
+            //////////////////////////
             explicit vector (const allocator_type& alloc = allocator_type()){
                 _capacity = _size = 0;
                 _allocator = alloc;
                 _array = _allocator.allocate(0);
             }
-            explicit vector(size_type size, const allocator_type& alloc = allocator_type()){
-                _capacity = _size = size;
+            explicit vector(size_type size, const value_type& val = value_type(),const allocator_type& alloc = allocator_type()){
                 _allocator = alloc;
-                _array = _allocator.allocate(size);
+                _size = _capacity = 0;
+                _array = _allocator.allocate(0);
+                for (size_type i = 0;i < size;i++)
+                    this->push_back(val);
             }
-            vector (const vector& x, const allocator_type& alloc = allocator_type()){
+            vector (const vector& x){
                 _capacity = _size = x._size;
-                _allocator = alloc;
+                _allocator = x._allocator;
                 _array = _allocator.allocate(x.size());
                 for (difference_type i = 0; i < x.size();i++)
-                    alloc.construct(&_array[i], x[i]);
+                    _allocator.construct(&_array[i], x[i]);
             }
             template<class InputIterator>
-            vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+            vector(InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator >::type  last, const allocator_type& alloc = allocator_type()){
                 difference_type len = std::distance(first, last);
                 _capacity = _size = len;
                 _allocator = alloc;
@@ -60,11 +65,24 @@ namespace ft{
                         first++;
                     }
             }
+            //////////////////////////
             //element access:
+            //////////////////////////
             reference operator[](size_type index){return (_array[index]);}
             const_reference operator[](size_type index) const {return (_array[index]);}
-            
+            const_reference at(size_type n) const{ 
+                if (n < _size)
+                    return (_array[n]);
+                throw (std::out_of_range("std::exception"));
+            }
+            reference at(size_type n){
+                if (n < _size)
+                    return (_array[n]);
+                throw (std::out_of_range("std::exception"));
+            }
+            //////////////////////////
             //modifiers:
+            //////////////////////////
             void pop_back(){
                 _allocator.destroy(&_array[_size - 1]);
                 _size -= 1;
@@ -92,12 +110,16 @@ namespace ft{
                     _size += 1;
                 }
             }
+            //////////////////////////
             //iterators:
+            //////////////////////////
             iterator begin() { return iterator(_array); }
-            iterator begin() const { return iterator(_array); }
+            // const_iterator begin() const { return iterator(_array); }
             iterator end(){return iterator(_array + _size);}
-            iterator end()const{return iterator(_array + _size);}
+            // const_iterator end()const{return iterator(_array + _size);}
+            //////////////////////////
             //capacity:
+            //////////////////////////
             size_type capacity()const {return _capacity;}
             size_type size()const{return _size;}
             bool empty() const{return !(_size);}
@@ -133,7 +155,9 @@ namespace ft{
                     _allocator.deallocate(temp, temp_capacity);
                 }
             }
+            //////////////////////////
             //destructor:
+            //////////////////////////
             ~vector(){
                 for (size_type i = 0;i < _size; i++)
                     _allocator.destroy(&_array[i]);
