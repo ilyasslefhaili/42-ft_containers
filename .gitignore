@@ -1,3 +1,4 @@
 *.out
 *.dSYM
 ft_containers-terminator
+.vscode
