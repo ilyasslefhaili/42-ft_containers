@@ -3,9 +3,13 @@
 int main()
 {
         ft::vector<char> v(64, 'a');
+        ft::vector<char>::iterator l = v.begin();
+
+        l = l + 3;
         //  for (int i = 0; i < 266; ++i) {
         //     std::cout<<v.size()<<"     "<<i<<std::endl;
         //     v.push_back(45.0123);
         // }
-        std::cout<<v.at(38)<<std::endl;
+        v.insert(l, 'o');
+        std::cout<<v.at(2)<<std::endl;
 } 

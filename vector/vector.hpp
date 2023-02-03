@@ -114,10 +114,24 @@ namespace ft{
                     _size += 1;
                 }
             }
-            iterator insert (iterator position, const value_type& val);
-            void insert (iterator position, size_type n, const value_type& val);
-            template <class InputIterator>
-                void insert (iterator position, InputIterator first, InputIterator last);
+            iterator insert (iterator position, const value_type& val)
+            {
+                difference_type count = std::distance(this->begin(), position) - 1;
+                value_type *temp = _allocator.allocate(1);
+                this->push_back(val);
+                difference_type  e = _size - 1;
+                while (e > count)
+                {
+                    value_type temp = _array[e];
+                    _array[e] = _array[e - 1];
+                    _array[e - 1] = temp;
+                    e--;
+                }
+                return (position);
+            }
+            // void insert (iterator position, size_type n, const value_type& val);
+            // template <class InputIterator>
+                // void insert (iterator position, InputIterator first, InputIterator last);
             //////////////////////////
             //iterators:
             //////////////////////////
