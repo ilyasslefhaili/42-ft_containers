@@ -114,8 +114,7 @@ namespace ft{
                     _size += 1;
                 }
             }
-            iterator insert (iterator position, const value_type& val)
-            {
+            iterator insert (iterator position, const value_type& val){
                 difference_type i = std::distance(this->begin(), position);
                 this->push_back(val);
                 difference_type  e = _size - 1;
@@ -128,7 +127,13 @@ namespace ft{
                 }
                 return (this->begin() + i);
             }
-            // void insert (iterator position, size_type n, const value_type& val){}
+            void insert (iterator position, size_type n, const value_type& val){
+                if (n > this->max_size())
+                    _allocator.allocate(n);
+                for (size_type i = 0;i < n;i++){
+                    position = this->insert(position, val) + 1;
+                }
+            }
             // template <class InputIterator>
                 // void insert (iterator position, InputIterator first, InputIterator last);
             //////////////////////////
@@ -144,7 +149,10 @@ namespace ft{
             size_type capacity()const {return _capacity;}
             size_type size()const{return _size;}
             bool empty() const{return !(_size);}
-            size_type max_size() const{return _allocator.max_size();}
+            size_type max_size() const
+            {
+                return std::min((std::size_t)std::numeric_limits<std::ptrdiff_t>::max(), _allocator.max_size());
+            }
             void resize (size_type n, value_type val = value_type()){
                 if (n > this->max_size())
                         throw(std::length_error("std::exception"));
