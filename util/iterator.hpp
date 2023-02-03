@@ -18,11 +18,12 @@ namespace ft{
     
     template <class T>
     class iterator{
-        typedef typename iterator_traits<T *>::value_type               value_type;
-        typedef typename iterator_traits<T *>::difference_type          difference_type;
-        typedef typename iterator_traits<T *>::iterator_category        iterator_category;
-        typedef typename iterator_traits<T *>::pointer                  pointer;
-        typedef typename iterator_traits<T *>::reference                reference; 
+        public:
+            typedef typename iterator_traits<T *>::value_type               value_type;
+            typedef typename iterator_traits<T *>::difference_type          difference_type;
+            typedef typename iterator_traits<T *>::iterator_category        iterator_category;
+            typedef typename iterator_traits<T *>::pointer                  pointer;
+            typedef typename iterator_traits<T *>::reference                reference; 
         public:
             iterator() {_ptr = NULL;}
             iterator(pointer p){_ptr = p;}
@@ -42,15 +43,13 @@ namespace ft{
             iterator& operator+(int i){
                 _ptr += i;
                 return (*this);}
-            iterator& operator-(int i){
+            iterator& operator-(difference_type i){
                 _ptr -= i;
                 return (*this);}
             iterator& operator+(iterator& i){
                 _ptr += i._ptr;
                 return (*this);}
-            iterator& operator-(iterator& i){
-                _ptr -= i._ptr;
-                return (*this);}
+            difference_type operator-(iterator& i){return (_ptr - i._ptr);}
             iterator& operator++(){
                 _ptr++;
                 return (*this);}
