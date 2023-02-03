@@ -80,8 +80,10 @@ namespace ft{
                     return (_array[n]);
                 throw (std::out_of_range("std::exception"));
             }
-            reference front(){}
-            const_reference front() const{}
+            reference front(){return _array[0];}
+            const_reference front() const{return _array[0];}
+            reference back(){return _array[_size - 1];}
+            const_reference back() const{return _array[_size - 1];}
             //////////////////////////
             //modifiers:
             //////////////////////////
@@ -112,6 +114,10 @@ namespace ft{
                     _size += 1;
                 }
             }
+            iterator insert (iterator position, const value_type& val);
+            void insert (iterator position, size_type n, const value_type& val);
+            template <class InputIterator>
+                void insert (iterator position, InputIterator first, InputIterator last);
             //////////////////////////
             //iterators:
             //////////////////////////
