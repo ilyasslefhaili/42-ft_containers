@@ -51,7 +51,7 @@ namespace ft{
                 _capacity = _size = x._size;
                 _allocator = x._allocator;
                 _array = _allocator.allocate(x.size());
-                for (difference_type i = 0; i < x.size();i++)
+                for (size_type i = 0; i < x.size();i++)
                     _allocator.construct(&_array[i], x[i]);
             }
             template<class InputIterator>
@@ -116,20 +116,19 @@ namespace ft{
             }
             iterator insert (iterator position, const value_type& val)
             {
-                difference_type count = std::distance(this->begin(), position) - 1;
-                value_type *temp = _allocator.allocate(1);
+                difference_type i = std::distance(this->begin(), position);
                 this->push_back(val);
                 difference_type  e = _size - 1;
-                while (e > count)
+                while (e > i)
                 {
                     value_type temp = _array[e];
                     _array[e] = _array[e - 1];
                     _array[e - 1] = temp;
                     e--;
                 }
-                return (position);
+                return (this->begin() + i);
             }
-            // void insert (iterator position, size_type n, const value_type& val);
+            // void insert (iterator position, size_type n, const value_type& val){}
             // template <class InputIterator>
                 // void insert (iterator position, InputIterator first, InputIterator last);
             //////////////////////////
@@ -147,10 +146,10 @@ namespace ft{
             bool empty() const{return !(_size);}
             size_type max_size() const{return _allocator.max_size();}
             void resize (size_type n, value_type val = value_type()){
-                if (_size < n)
-                {
-                    if (n > this->max_size())
+                if (n > this->max_size())
                         throw(std::length_error("std::exception"));
+                else if (_size < n)
+                {
                     while (_size < n)
                         this->push_back(val);
                 }
