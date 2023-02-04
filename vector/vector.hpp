@@ -134,8 +134,13 @@ namespace ft{
                     position = this->insert(position, val) + 1;
                 }
             }
-            // template <class InputIterator>
-                // void insert (iterator position, InputIterator first, InputIterator last);
+            template <class InputIterator>
+                void insert (iterator position, InputIterator first,typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator >::type  last){
+                    while (first != last){
+                        position = this->insert(position, *first) + 1;
+                        first++;
+                    }
+                }
             //////////////////////////
             //iterators:
             //////////////////////////
