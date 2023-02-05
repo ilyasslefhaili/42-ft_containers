@@ -21,11 +21,11 @@ namespace ft
     class vector
     {
     public:
-        typedef typename Allocator::reference reference;
-        typedef typename Allocator::const_reference const_reference;
+        typedef typename Allocator::reference           reference;
+        typedef typename Allocator::const_reference     const_reference;
         typedef iterator<T> iterator;
         // typedef iterator<const T>                     const_iterator;
-        typedef size_t size_type;
+        typedef size_t                                  size_type;
         typedef ptrdiff_t difference_type;
         typedef T value_type;
         typedef typename Allocator::pointer pointer;
@@ -41,13 +41,13 @@ namespace ft
         {
             _capacity = _size = 0;
             _allocator = alloc;
-            _array = _allocator.allocate(0);
+            _array = NULL;
         }
         explicit vector(size_type size, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
         {
             _allocator = alloc;
             _size = _capacity = 0;
-            _array = _allocator.allocate(0);
+            _array = NULL;
             for (size_type i = 0; i < size; i++)
                 this->push_back(val);
         }
@@ -62,13 +62,12 @@ namespace ft
         template <class InputIterator>
         vector(InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type &alloc = allocator_type())
         {
-            difference_type len = std::distance(first, last);
-            _capacity = _size = len;
+            _array = NULL; 
+            _capacity = _size = 0;
             _allocator = alloc;
-            _array = _allocator.allocate(len);
-            for (difference_type i = 0; i < len; i++)
-            {
-                _allocator.construct(&_array[i], *first);
+            while (first != last)
+            { 
+                this->push_back(*first);
                 first++;
             }
         }
@@ -111,17 +110,20 @@ namespace ft
             if (_size == _capacity)
             {
                 pointer temp = _array;
+                size_type temp_capacity = _capacity;
                 if (_capacity == 0)
                     _capacity += 1;
                 _capacity *= 2;
                 _array = _allocator.allocate(_capacity);
+               
                 for (size_type i = 0; i < _size; i++)
                 {
-                    _allocator.construct(&_array[i], temp[i]);
+                    _allocator.construct(&_array[i], temp[i]);    
                     _allocator.destroy(&temp[i]);
                 }
-                _allocator.construct(&_array[_size], val);
-                _allocator.deallocate(temp, _size);
+                _allocator.construct(&_array[_size], val); 
+                if (temp_capacity > 0)
+                    _allocator.deallocate(temp, temp_capacity);
                 _size += 1;
             }
             else
@@ -258,9 +260,11 @@ namespace ft
         //////////////////////////
         ~vector()
         {
-            for (size_type i = 0; i < _size; i++)
-                _allocator.destroy(&_array[i]);
-            _allocator.deallocate(_array, _capacity);
+            if (_array != NULL){
+                for (size_type i = 0; i < _size; i++)
+                    _allocator.destroy(&_array[i]);
+                _allocator.deallocate(_array, _capacity);
+            }
         }
 
     private:

@@ -40,8 +40,7 @@ int main()
 	NAMESPACE::vector<int> vec;
 	for (int i = 0; i < 7; ++i)
 		vec.push_back(i + 1);
-	vec.erase(vec.begin() + 4, vec.end() - 1);
-	for (size_t i = 0; i < vec.size(); ++i)
-		std::cout << vec.at(i) << " ";
-	std::cout << std::endl;
+	ft::vector<int> v(vec.begin(), vec.end());
+        for (int i = 0; i < 4;i++)
+                std::cout<<v[i]<<std::endl;
 } 
