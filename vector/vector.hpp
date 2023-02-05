@@ -72,6 +72,11 @@ namespace ft
                 first++;
             }
         }
+        void assign(size_type n, const T& u){
+            this->clear();
+            for (size_type i = 0;i < n; i++)
+                this->push_back(u);
+        }
         //////////////////////////
         // element access:
         //////////////////////////
