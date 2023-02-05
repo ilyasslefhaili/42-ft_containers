@@ -185,17 +185,14 @@ namespace ft
             size_type l = count;
             if (l + pos < _size)
             {
-                for (size_type i = pos; i < _size; i++)
-                {
                     while (to_locate)
                     {
-                        value_type temp = _array[l + i];
-                        _array[l + i] = _array[i];
-                        _array[i] = temp;
-                        i++;
+                        value_type temp = _array[l + pos];
+                        _array[l + pos] = _array[pos];
+                        _array[pos] = temp;
+                        pos++;
                         to_locate--;
                     }
-                }
             }
             for (size_type i = 0; i < l; i++)
                 this->pop_back();
