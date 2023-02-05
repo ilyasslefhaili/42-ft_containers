@@ -76,6 +76,14 @@ namespace ft
             for (size_type i = 0;i < n; i++)
                 this->push_back(u);
         }
+        template <class InputIterator> 
+            void assign (InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last){
+                this->clear();
+                while (first != last){
+                    this->push_back(*first);
+                    first++;
+                }
+        }
         //////////////////////////
         // element access:
         //////////////////////////
@@ -252,7 +260,8 @@ namespace ft
                     this->push_back(temp[i]);
                     _allocator.destroy(&temp[i]);
                 }
-                _allocator.deallocate(temp, temp_capacity);
+                if (temp_capacity > 0)
+                    _allocator.deallocate(temp, temp_capacity);
             }
         }
         //////////////////////////
