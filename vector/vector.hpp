@@ -178,10 +178,10 @@ namespace ft
         iterator erase(iterator first, iterator last)
         {
             difference_type pos = std::distance(this->begin(), first);
-            difference_type to_locate =     std::distance(last, this->end());
+            difference_type count = std::distance(first, last);
+            difference_type to_locate = std::distance(last, this->end());
             if (to_locate < 0)
                 return last;
-            difference_type count = std::distance(first, last);
             size_type l = count;
             if (l + pos < _size)
             {
