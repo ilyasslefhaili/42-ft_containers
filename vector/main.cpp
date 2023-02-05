@@ -4,21 +4,23 @@
 #include <iostream>
 #include <vector>
 // int i = 0;
-// class m
-// {
-        // private:
-                // int a;
-        // public:
-        // m(){
-                // std::cout<<"lksjalfjal\n";
-        //  }
-        //  m(const m& a){
-                // (void)a;
-                // std::cout<<"copy " << i << std::endl;
-                // i++;
-        //  }
-        // ~m(){}
-// };
+class m
+{
+        private:
+                int a;
+        public:
+        m(){
+                std::cout<<"lksjalfjal\n";
+         }
+         m(const m& a){
+                (void)a;
+                //std::cout<<"copy " << i << std::endl;
+                //i++;
+         }
+        ~m(){
+                std::cout<<"dest"<<std::endl;
+        }
+};
 
 // int main()
 // {
@@ -30,10 +32,16 @@
     //num.insert(num.begin() + 8, h);
 
 //}
+
+#define NAMESPACE ft
+
 int main()
 {
-     ft::vector<int> l;
-     l.insert(l.end(), 10, 64);
-     for (int i = 0; i < 10;i++)
-        std::cout<<l[i]<<"\n";
+	NAMESPACE::vector<int> vec;
+	for (int i = 0; i < 7; ++i)
+		vec.push_back(i + 1);
+	vec.erase(vec.begin() + 4, vec.end() - 1);
+	for (size_t i = 0; i < vec.size(); ++i)
+		std::cout << vec.at(i) << " ";
+	std::cout << std::endl;
 } 
