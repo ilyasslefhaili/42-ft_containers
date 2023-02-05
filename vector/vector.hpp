@@ -183,20 +183,23 @@ namespace ft
             if (to_locate < 0)
                 return last;
             size_type l = count;
-            if (l + pos < _size)
-            {
-                    while (to_locate)
-                    {
-                        value_type temp = _array[l + pos];
-                        _array[l + pos] = _array[pos];
-                        _array[pos] = temp;
-                        pos++;
-                        to_locate--;
-                    }
+            while (to_locate){
+                value_type temp = _array[l + pos];
+                _array[l + pos] = _array[pos];
+                _array[pos] = temp;
+                pos++;
+                to_locate--;
             }
             for (size_type i = 0; i < l; i++)
                 this->pop_back();
             return (last);
+        }
+        void swap(vector& x){
+            vector a(x);
+        }
+        void clear(){
+            while (!this->empty())
+                this->pop_back();
         }
         //////////////////////////
         // iterators:
@@ -211,27 +214,22 @@ namespace ft
         size_type capacity() const { return _capacity; }
         size_type size() const { return _size; }
         bool empty() const { return !(_size); }
-        size_type max_size() const
-        {
+        size_type max_size() const{
             return std::min((std::size_t)std::numeric_limits<std::ptrdiff_t>::max(), _allocator.max_size());
         }
-        void resize(size_type n, value_type val = value_type())
-        {
+        void resize(size_type n, value_type val = value_type()){
             if (n > this->max_size())
                 throw(std::length_error("std::exception"));
-            else if (_size < n)
-            {
+            else if (_size < n){
                 while (_size < n)
                     this->push_back(val);
             }
-            else
-            {
+            else{
                 while (_size > n)
                     this->pop_back();
             }
         }
-        void reserve(size_type n)
-        {
+        void reserve(size_type n){
             if (n > this->max_size())
                 throw(std::length_error("std::exception"));
             else if (n > _capacity)
