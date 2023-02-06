@@ -210,9 +210,9 @@ namespace ft
             return (last);
         }
         void swap(vector& x){
-            vector a(x);
-            x.assign(this->begin(), this->end());
-            this->assign(a.begin(), a.end());
+            std::swap(this->_array, x._array);
+            std::swap(x._size, _size);
+            std::swap(_capacity, x._capacity);
         }
         void clear(){
             while (!this->empty())
