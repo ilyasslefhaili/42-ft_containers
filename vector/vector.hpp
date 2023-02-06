@@ -211,6 +211,8 @@ namespace ft
         }
         void swap(vector& x){
             vector a(x);
+            x.assign(this->begin(), this->end());
+            this->assign(a.begin(), a.end());
         }
         void clear(){
             while (!this->empty())
@@ -282,6 +284,10 @@ namespace ft
         size_type _size;
         size_type _capacity;
     };
+    template <class T, class Allocator>
+        void swap(vector<T,Allocator>& x, vector<T,Allocator>& y){
+            x.swap(y);
+        }
 }
 
 #endif
