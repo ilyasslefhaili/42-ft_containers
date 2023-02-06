@@ -84,6 +84,16 @@ namespace ft
                     first++;
                 }
         }
+        allocator_type get_allocator() const{
+            return _allocator;
+        }
+        //////////////////////////
+        // operators:
+        //////////////////////////
+        vector& operator= (const vector& x){
+            this->assign(x.begin(), x.end());
+            return (*this);
+        }
         //////////////////////////
         // element access:
         //////////////////////////
@@ -288,6 +298,10 @@ namespace ft
         void swap(vector<T,Allocator>& x, vector<T,Allocator>& y){
             x.swap(y);
         }
+    // template <class T, class Allocator>
+        // bool operator==(const vector<T,Allocator>& x,const vector<T,Allocator>& y){
+// 
+        // }
 }
 
 #endif
