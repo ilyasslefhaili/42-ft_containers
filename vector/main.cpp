@@ -4,23 +4,23 @@
 #include <iostream>
 #include <vector>
 // int i = 0;
-class m
-{
-        private:
-                int a;
-        public:
-        m(){
-                std::cout<<"lksjalfjal\n";
-         }
-         m(const m& a){
-                (void)a;
-                //std::cout<<"copy " << i << std::endl;
-                //i++;
-         }
-        ~m(){
-                std::cout<<"dest"<<std::endl;
-        }
-};
+// class m
+// {
+//         private:
+//                 int a;
+//         public:
+//         m(){
+//                 std::cout<<"lksjalfjal\n";
+//          }
+//          m(const m& a){
+//                 (void)a;
+//                 //std::cout<<"copy " << i << std::endl;
+//                 //i++;
+//          }
+//         ~m(){
+//                 std::cout<<"dest"<<std::endl;
+//         }
+// };
 
 // int main()
 // {
@@ -37,10 +37,13 @@ class m
 
 int main()
 {
-	NAMESPACE::vector<int> vec;
-	for (int i = 0; i < 7; ++i)
-		vec.push_back(i + 1);
-	ft::vector<int> v(vec.begin(), vec.end());
-        for (int i = 0; i < 4;i++)
-                std::cout<<v[i]<<std::endl;
+        ft::vector<int> vl;
+       vl.insert(vl.begin(), 10, 0);
+	// for (int i = 0; i < 7; ++i)
+	// 	vec.push_back(i + 1);
+        // for (int i = 0; i < 4;i++)
+        //         std::cout<<vec[i]<<std::endl;
+        NAMESPACE::vector<int>::iterator it = vl.begin();
+       NAMESPACE::vector<int>::const_iterator cit = vl.begin();
+       std::cout<<*(2+it);
 } 

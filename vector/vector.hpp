@@ -15,6 +15,7 @@
 #include <iostream>
 #include "../util/iterator.hpp"
 #include "../util/reverse_iterator.hpp"
+#include "../util/util_vector.hpp"
 namespace ft
 {
     template <class T, class Allocator = std::allocator<T> >
@@ -24,7 +25,7 @@ namespace ft
         typedef typename Allocator::reference           reference;
         typedef typename Allocator::const_reference     const_reference;
         typedef iterator<T> iterator;
-        // typedef iterator<const T>                     const_iterator;
+        // typedef iterator<consT> constiterator;
         typedef size_t                                  size_type;
         typedef ptrdiff_t difference_type;
         typedef T value_type;
@@ -32,7 +33,8 @@ namespace ft
         typedef typename Allocator::const_pointer const_pointer;
         typedef Allocator allocator_type;
         typedef reverse_iterator<iterator> reverse_iterator;
-        // typedef reverse_iterator<const_iterator>      const_reverse_iterator;
+        typedef ft::iterator<const T> const_iterator; 
+        typedef ft::reverse_iterator<const_iterator>      const_reverse_iterator;
 
         //////////////////////////
         // constructors
@@ -232,9 +234,9 @@ namespace ft
         // iterators:
         //////////////////////////
         iterator begin() { return iterator(_array); }
-        // const_iterator begin() const { return iterator(_array); }
+        const_iterator begin() const { return iterator(_array); }
         iterator end() { return iterator(_array + _size); }
-        // const_iterator end()const{return iterator(_array + _size);}
+        const_iterator end()const{return iterator(_array + _size);}
         //////////////////////////
         // capacity:
         //////////////////////////
@@ -298,10 +300,36 @@ namespace ft
         void swap(vector<T,Allocator>& x, vector<T,Allocator>& y){
             x.swap(y);
         }
-    // template <class T, class Allocator>
-        // bool operator==(const vector<T,Allocator>& x,const vector<T,Allocator>& y){
-// 
-        // }
+    template <class T, class Allocator>
+        bool operator==(const vector<T,Allocator>& x,const vector<T,Allocator>& y){
+            if (x.size() != y.size())
+                return (false);
+            for (size_t i = 0;i < x.size();i++){
+                if (x.at(i) != y.at(i))
+                    return false;
+            }
+            return true;
+        }
+    template <class T, class Allocator>
+        bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y){
+            return lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+        }
+    template <class T, class Allocator>
+        bool operator!=(const vector<T,Allocator>& x, const vector<T,Allocator>& y){
+            return !(x == y);
+        }
+    template <class T, class Allocator>
+        bool operator> (const vector<T,Allocator>& x, const vector<T,Allocator>& y){
+            return (y < x);
+        }
+    template <class T, class Allocator>
+        bool operator>=(const vector<T,Allocator>& x, const vector<T,Allocator>& y){
+        return (!(x < y));
+        }
+    template <class T, class Allocator>
+        bool operator<=(const vector<T,Allocator>& x, const vector<T,Allocator>& y){
+            return (!(y < x));
+        }
 }
 
 #endif
