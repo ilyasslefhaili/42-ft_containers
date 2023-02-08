@@ -25,7 +25,6 @@ namespace ft
         typedef typename Allocator::reference           reference;
         typedef typename Allocator::const_reference     const_reference;
         typedef iterator<T> iterator;
-        // typedef iterator<consT> constiterator;
         typedef size_t                                  size_type;
         typedef ptrdiff_t difference_type;
         typedef T value_type;
@@ -47,11 +46,16 @@ namespace ft
         }
         explicit vector(size_type size, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
         {
+            if (size < 0 || size > this->max_size())
+                throw(std::length_error("vector"));
             _allocator = alloc;
             _size = _capacity = 0;
             _array = NULL;
-            for (size_type i = 0; i < size; i++)
-                this->push_back(val);
+            if (size > 0 && size < this->max_size())
+            {
+                for (size_type i = 0; i < size; i++)
+                    this->push_back(val);
+            }
         }
         vector(const vector &x)
         {
@@ -237,6 +241,18 @@ namespace ft
         const_iterator begin() const { return iterator(_array); }
         iterator end() { return iterator(_array + _size); }
         const_iterator end()const{return iterator(_array + _size);}
+        reverse_iterator rbegin(){
+            return (reverse_iterator(this->end()));
+        }
+        const_reverse_iterator rbegin() const{
+            return (const_reverse_iterator(this->end()));
+        }
+        reverse_iterator rend(){
+          return (reverse_iterator(this->begin()));
+        }
+        const_reverse_iterator rend() const{
+          return (const_reverse_iterator(this->begin()));
+        }
         //////////////////////////
         // capacity:
         //////////////////////////

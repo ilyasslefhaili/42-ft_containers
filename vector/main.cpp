@@ -37,13 +37,7 @@
 
 int main()
 {
-        ft::vector<int> vl;
-       vl.insert(vl.begin(), 10, 0);
-	// for (int i = 0; i < 7; ++i)
-	// 	vec.push_back(i + 1);
-        // for (int i = 0; i < 4;i++)
-        //         std::cout<<vec[i]<<std::endl;
-        NAMESPACE::vector<int>::iterator it = vl.begin();
-       NAMESPACE::vector<int>::const_iterator cit = vl.begin();
-       std::cout<<*(2+it);
+    ft::vector<int> l(10,9);
+    std::reverse(l.rbegin(), l.rend());
+    std::cout   << "*l.rbegin() = " << *l.rbegin() << std::endl;
 } 
