@@ -24,7 +24,6 @@ namespace ft{
             ////////////////
             ////member types
             ////////////////
-            // typedef std::random_access_iterator_tag iterator_category;
             typedef typename ft::iterator_traits<T>::iterator_category  iterator_category;
             typedef T                                                   iterator_type;
             typedef typename ft::iterator_traits<T>::value_type         value_type;
@@ -67,9 +66,7 @@ namespace ft{
                 _iterator++;
                 return (*this);
             }
-            reverse_iterator& operator=(const reverse_iterator &x)
-            {
-                // std::cout << "aam here 2\n";
+            reverse_iterator& operator=(const reverse_iterator &x){
                 this->_iterator = x.base();
                 return *this;
             }
@@ -118,10 +115,10 @@ namespace ft{
      template <class Iterator, class B> bool operator<=(const reverse_iterator<Iterator>& x,const reverse_iterator<B>& y){
         return x.base() >= y.base();
     }
-    template <class Iterator>typename reverse_iterator<Iterator>::difference_type operator-(const reverse_iterator<Iterator>& x,const reverse_iterator<Iterator>& y){
+    template <class Iterator, class B>typename reverse_iterator<Iterator>::difference_type operator-(const reverse_iterator<Iterator>& x,const reverse_iterator<B>& y){
         return y.base() - x.base();
     }
-    template <class Iterator>typename reverse_iterator<Iterator>::difference_type operator+(const reverse_iterator<Iterator>& x,const reverse_iterator<Iterator>& y){
+    template <class Iterator, class B>typename reverse_iterator<Iterator>::difference_type operator+(const reverse_iterator<Iterator>& x,const reverse_iterator<B>& y){
         return x.base() - y.base();
     }
     template <class Iterator>reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n,const reverse_iterator<Iterator>& x){

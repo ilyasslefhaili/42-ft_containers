@@ -37,15 +37,18 @@
 
 int main()
 {
-    NAMESPACE::vector<int> l;
-    for (int i = 0; i < 10; i++)
-        l.push_back(i);
-    std::reverse(l.rbegin(), l.rend());
-    NAMESPACE::vector<int>::iterator e = l.begin();
-    while (e != l.end())
-    {
-        std::cout << *e << " ";
-        e++;
-    }
-    std::cout << std::endl;
+    // NAMESPACE::vector<int> l;
+    // for (int i = 0; i < 10; i++)
+    //     l.push_back(i);
+    // std::cout<<">>>>"<<*(l.erase(l.begin(), l.begin() + 3))<<std::endl;
+    // for (int i = 0;i < 7;i++)
+    //     std::cout<< l[i]<< std::endl;
+    // std::cout<<l.size()<<std::endl;
+    ft::vector<int> a(10, 10);
+    ft::vector<int>::const_reverse_iterator l(a.rend());
+    // ft::vector<int>::const_reverse_iterator l(a.rbegin());
+
+
+    // std::cout << "const_ite +=/-=: " << *(l += 2) << " | " << *(l -= 2) << std::endl;
+    std::cout << "(ite + 3 == it): " << (l - a.rbegin()) << std::endl;
 }

@@ -217,8 +217,9 @@ namespace ft
             difference_type count = std::distance(first, last);
             difference_type to_locate = std::distance(last, this->end());
             if (to_locate < 0)
-                return last;
+                return (first);
             size_type l = count;
+            iterator retu(&_array[pos]);
             while (to_locate)
             {
                 value_type temp = _array[l + pos];
@@ -229,7 +230,7 @@ namespace ft
             }
             for (size_type i = 0; i < l; i++)
                 this->pop_back();
-            return (last);
+            return (retu);
         }
         void swap(vector &x)
         {
