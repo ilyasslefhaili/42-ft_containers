@@ -25,11 +25,11 @@
 // int main()
 // {
 //     m l;
-    //ft::vector<m> num(43, l);  
+// ft::vector<m> num(43, l);
 //     m h = l;
 
-    //l = h;
-    //num.insert(num.begin() + 8, h);
+// l = h;
+// num.insert(num.begin() + 8, h);
 
 //}
 
@@ -37,7 +37,15 @@
 
 int main()
 {
-    ft::vector<int> l(10,9);
+    NAMESPACE::vector<int> l;
+    for (int i = 0; i < 10; i++)
+        l.push_back(i);
     std::reverse(l.rbegin(), l.rend());
-    std::cout   << "*l.rbegin() = " << *l.rbegin() << std::endl;
-} 
+    NAMESPACE::vector<int>::iterator e = l.begin();
+    while (e != l.end())
+    {
+        std::cout << *e << " ";
+        e++;
+    }
+    std::cout << std::endl;
+}
