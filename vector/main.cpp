@@ -33,7 +33,7 @@
 
 //}
 
-#define NAMESPACE ft
+#define NAMESPACE std
 
 int main()
 {
@@ -44,11 +44,13 @@ int main()
     // for (int i = 0;i < 7;i++)
     //     std::cout<< l[i]<< std::endl;
     // std::cout<<l.size()<<std::endl;
-    ft::vector<int> a(10, 10);
-    ft::vector<int>::const_reverse_iterator l(a.rend());
+    // ft::vector<int> a(10, 10);
+    // ft::vector<int>::const_reverse_iterator l(a.rend());
     // ft::vector<int>::const_reverse_iterator l(a.rbegin());
-
-
+    NAMESPACE::vector<char> my_v(10, 'a');
+    std::cout<<my_v.capacity()<<std::endl;
+    my_v.assign(90, 'n');
+    std::cout<<my_v.capacity()<<std::endl;
     // std::cout << "const_ite +=/-=: " << *(l += 2) << " | " << *(l -= 2) << std::endl;
-    std::cout << "(ite + 3 == it): " << (l - a.rbegin()) << std::endl;
+    // std::cout << "(ite + 3 == it): " << (l - a.rbegin()) << s
 }

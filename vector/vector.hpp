@@ -44,18 +44,16 @@ namespace ft
             _allocator = alloc;
             _array = NULL;
         }
-        explicit vector(size_type size, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+        vector(size_type size, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
         {
-            if (size < 0 || size > this->max_size())
+            if (size > this->max_size())
                 throw(std::length_error("vector"));
             _allocator = alloc;
-            _size = _capacity = 0;
-            _array = NULL;
-            if (size > 0 && size < this->max_size())
-            {
-                for (size_type i = 0; i < size; i++)
-                    this->push_back(val);
-            }
+            _size = 0;
+            _array = _allocator.allocate(size);
+            _capacity = size;
+            for (size_type i = 0; i < size; i++)
+                this->push_back(val);
         }
         vector(const vector &x)
         {
@@ -66,7 +64,8 @@ namespace ft
                 _allocator.construct(&_array[i], x[i]);
         }
         template <class InputIterator>
-        vector(InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type &alloc = allocator_type())
+        vector(InputIterator first, InputIterator last, const allocator_type &alloc =  allocator_type(), typename std::enable_if<!std::is_integral<InputIterator>::value>::type* =0 )
+        // vector(typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::typer first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type &alloc = allocator_type())
         {
             _array = NULL;
             _capacity = _size = 0;
@@ -80,6 +79,14 @@ namespace ft
         void assign(size_type n, const T &u)
         {
             this->clear();
+            if (_capacity < n)
+            {
+                value_type *temp = _array;
+                _array =_allocator.allocate(n);
+                if (_capacity > 0)
+                    _allocator.deallocate(temp, _capacity);
+                _capacity = n;
+            }
             for (size_type i = 0; i < n; i++)
                 this->push_back(u);
         }
@@ -142,9 +149,9 @@ namespace ft
                 size_type temp_capacity = _capacity;
                 if (_capacity == 0)
                     _capacity += 1;
-                _capacity *= 2;
+                else
+                    _capacity *= 2;
                 _array = _allocator.allocate(_capacity);
-
                 for (size_type i = 0; i < _size; i++)
                 {
                     _allocator.construct(&_array[i], temp[i]);
@@ -283,6 +290,22 @@ namespace ft
                 throw(std::length_error("std::exception"));
             else if (_size < n)
             {
+                if (_capacity < n)
+                {
+                    value_type *temp = _array;
+                    size_type temp_capacity = _capacity;
+                    size_type s = _size;
+                    _size = 0;
+                    _array = _allocator.allocate(n);
+                    _capacity = n;
+                    while (_size < s)
+                    {
+                        this->push_back(temp[_size]);
+                        _allocator.destroy(&temp[_size - 1]);
+                    }
+                    if (temp_capacity > 0)
+                        _allocator.deallocate(temp, temp_capacity);
+                }
                 while (_size < n)
                     this->push_back(val);
             }
