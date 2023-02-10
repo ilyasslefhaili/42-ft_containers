@@ -93,12 +93,17 @@ namespace ft
         template <class InputIterator>
         void assign(InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last)
         {
-            this->clear();
-            while (first != last)
-            {
-                this->push_back(*first);
-                first++;
-            }
+            vector tmp(first, last);
+            this->clear(); 
+            if (tmp._size > this->_capacity){
+                    value_type *t = _array;
+                    _array = _allocator.allocate(tmp._size);
+                    if (_capacity > 0)
+                        _allocator.deallocate(t, _capacity);
+                    _capacity = tmp._size;
+            } 
+            for (size_type i = 0;i < tmp._size;i++)
+                this->push_back(tmp[i]);
         }
         allocator_type get_allocator() const
         {
@@ -194,10 +199,18 @@ namespace ft
         template <class InputIterator>
         void insert(iterator position, InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last)
         {
-            while (first != last)
-            {
-                position = this->insert(position, *first) + 1;
+            size_type len = _size;
+            difference_type pos = std::distance(this->begin(), position);
+            while (first != last){
+                this->push_back(*first);
                 first++;
+            }
+            while (len > pos){
+                value_type temp = _array[pos];
+                _array[pos] = _array[pos + len];
+                _array[pos + len] = temp;
+                len++;
+                pos++;
             }
         }
         iterator erase(iterator position)
