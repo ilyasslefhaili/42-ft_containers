@@ -189,28 +189,51 @@ namespace ft
         }
         void insert(iterator position, size_type n, const value_type &val)
         {
+            difference_type pos = std::distance(this->begin(), position);
+            (void )pos;
             if (n > this->max_size())
                 _allocator.allocate(n);
-            for (size_type i = 0; i < n; i++)
-            {
-                position = this->insert(position, val) + 1;
+            if (n + _size > this->_capacity && n + _size <= this->_capacity * 2)
+                this->reserve(_capacity * 2);
+            else if (n + _size > this->_capacity)
+                this->reserve(n + _size);
+            for (size_type i = _size; i < _size + n; i++)
+                this->_allocator.construct(&_array[i], val);
+            size_type len  = _size - pos;
+            size_type e = _size - 1;
+            for (size_type i = 0;i < len; i++){
+                this->_array[e + n] = this->_array[e];
+                e--;
             }
+            for (size_type i = 0; i < n; i++){
+                // this->_allocator.construct(this->_array + pos, val);
+                this->_array[pos] = val;
+                pos++;
+                _size++;
+            }       
+            
         }
         template <class InputIterator>
         void insert(iterator position, InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last)
         {
-            size_type len = _size;
             difference_type pos = std::distance(this->begin(), position);
-            while (first != last){
-                this->push_back(*first);
-                first++;
+            vector<T> vec(first, last);
+            if (vec.size() + _size > this->_capacity && vec.size() + _size <= this->_capacity * 2)
+                this->reserve(_capacity * 2);
+            else if (vec.size() + _size > this->_capacity)
+                this->reserve(vec.size() + _size);
+            for (size_type i = _size; i < _size + vec.size(); i++)
+                this->_allocator.construct(&_array[i], vec[i]);
+            size_type len  = (_size - pos);
+            size_type e = _size - 1;
+           for (size_type i = 0;i < len; i++){
+                this->_array[e + vec.size()] = this->_array[e];
+                e--;
             }
-            while (len > pos){
-                value_type temp = _array[pos];
-                _array[pos] = _array[pos + len];
-                _array[pos + len] = temp;
-                len++;
+            for (size_type i = 0; i < vec.size(); i++){
+                this->_array[pos] = vec.at(i);
                 pos++;
+                _size++;
             }
         }
         iterator erase(iterator position)

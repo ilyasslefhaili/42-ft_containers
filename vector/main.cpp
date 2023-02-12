@@ -4,23 +4,23 @@
 #include <iostream>
 #include <vector>
 // int i = 0;
-// class m
-// {
-//         private:
-//                 int a;
-//         public:
-//         m(){
-//                 std::cout<<"lksjalfjal\n";
-//          }
-//          m(const m& a){
-//                 (void)a;
-//                 //std::cout<<"copy " << i << std::endl;
-//                 //i++;
-//          }
-//         ~m(){
-//                 std::cout<<"dest"<<std::endl;
-//         }
-// };
+class m
+{
+        private:
+                //int a;
+        public:
+        m(){
+                std::cout<<"lksjalfjal\n";
+         }
+         m(const m& a){
+                (void)a;
+                //std::cout<<"copy " << i << std::endl;
+                //i++;
+         }
+        ~m(){
+                std::cout<<"dest"<<std::endl;
+        }
+};
 
 // int main()
 // {
@@ -33,7 +33,7 @@
 
 //}
 
-#define NAMESPACE std
+#define NAMESPACE ft
 
 int main()
 {
@@ -47,10 +47,18 @@ int main()
     // ft::vector<int> a(10, 10);
     // ft::vector<int>::const_reverse_iterator l(a.rend());
     // ft::vector<int>::const_reverse_iterator l(a.rbegin());
-    NAMESPACE::vector<char> my_v(10, 'a');
+    m l;
+    NAMESPACE::vector<m> my_v(10, l);
+    NAMESPACE::vector<m> v(20, l);
+    // std::cout<<my_v.capacity()<<std::endl;
+    // my_v.assign(90, 'n');
+    // std::cout<<my_v.capacity()<<std::endl;
+  
+    my_v.insert(my_v.begin(), v.begin(), v.begin() + 15);
+    // for (int i = 0;i < 14; i++)
+        // std::cout<<my_v[i]<<std::endl;
     std::cout<<my_v.capacity()<<std::endl;
-    my_v.assign(90, 'n');
-    std::cout<<my_v.capacity()<<std::endl;
+    std::cout<<my_v.size()<<std::endl;
     // std::cout << "const_ite +=/-=: " << *(l += 2) << " | " << *(l -= 2) << std::endl;
     // std::cout << "(ite + 3 == it): " << (l - a.rbegin()) << s
 }
