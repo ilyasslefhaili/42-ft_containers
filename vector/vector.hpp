@@ -64,7 +64,7 @@ namespace ft
                 _allocator.construct(&_array[i], x[i]);
         }
         template <class InputIterator>
-        vector(InputIterator first, InputIterator last, const allocator_type &alloc =  allocator_type(), typename std::enable_if<!std::is_integral<InputIterator>::value>::type* =0 )
+        vector(InputIterator first, InputIterator last, const allocator_type &alloc =  allocator_type(), typename enable_if<!std::is_integral<InputIterator>::value>::type* = 0)
         // vector(typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::typer first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type &alloc = allocator_type())
         {
             _array = NULL;

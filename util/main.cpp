@@ -9,10 +9,6 @@ int main()
     a.insert(611);
     // a.root = a.right_rotate(a.root);
     std::cout<<a.root->key<<std::endl;
-    std::cout<<a.root->right->key<<std::endl;
-    std::cout<<a.root->right->right->key<<std::endl;
-    a.root = a.left_rotate(a.root);
-    std::cout<<a.root->key<<std::endl;
     std::cout<<a.root->left->key<<std::endl;
     std::cout<<a.root->right->key<<std::endl;
 }

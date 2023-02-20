@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 // int i = 0;
+void f(int)
+{}
 class m
 {
         private:
