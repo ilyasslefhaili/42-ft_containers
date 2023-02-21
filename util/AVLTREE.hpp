@@ -95,8 +95,9 @@ class AVL
             node<T> *n = new node<T>;
             n->key = key;
             n->left= NULL;
+            n->parent = NULL;
             n->right = NULL;
-            n->height = 0;
+            n->height = 1;
             return (n);
         }
         int get_balance(node<T> *n){
@@ -104,26 +105,36 @@ class AVL
                 return 0;
             return height(n->left) - height(n->right);
         }
-        void rebalance(node<T> *n){
+        void rebalance(node<T> *n, T key){
             int balance = get_balance(n);
-            while (n != NULL && balance < 1 && balance > -1)
+            while (balance <= 1 && balance >= -1)
             {
+                if (n == NULL)
+                    break;
                 n = n->parent;
                 balance = get_balance(n);
             }
-            if (balance == -1)
+            if (balance > 1 && n->left->key > key)
+                right_rotate(n);
+            else if (balance < -1 && n->right->key < key)
                 left_rotate(n);
+            else if (balance > 1 && key > n->left->key)
+            {
+                std::cout<<"lll"<<std::endl;
+                left_rotate(n->left);
+                right_rotate(n);
+            }
+            else if (balance < -1 && key < n->right->key)
+            {
+                right_rotate(n->right);
+                left_rotate(n);
+            }
         }
         void insert(T key){
             node<T> *temp = root;
             node<T> *prev = temp;
             if (root == NULL){
-                root = new node<T>;
-                root->right = NULL;
-                root->parent = NULL;
-                root->left = NULL;
-                root->key = key;
-                root->height = 0;
+                root = newNode(key);
                 return ;
             }
             while (temp != NULL){
@@ -141,13 +152,13 @@ class AVL
             {
                 prev->right = newNode(key);
                 prev->right->parent = prev;
-                rebalance(prev->right);
+                rebalance(prev->right, key);
             }
             else
             {
                 prev->left = newNode(key);
                 prev->left->parent = prev;
-                rebalance(prev->left);
+                rebalance(prev->left, key);
             }
             
         }
