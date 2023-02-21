@@ -58,7 +58,7 @@ class AVL
                     parent->left = right_root;
             }
             else
-                this->root = right_root;
+                this->_root = right_root;
         }
         void right_rotate(node<T>* root){
             node<T> *left_root = root->left;
@@ -81,15 +81,15 @@ class AVL
                     parent->left = left_root;
             }
             else
-                this->root = left_root;
+                this->_root = left_root;
         }
     public:
-        node<T> *root;
-        size_t size;
+        node<T> *_root;
+        size_t  _size;
     public:
         AVL(){
-           root = NULL;
-           size =  0;
+           _root = NULL;
+           _size =  0;
         }
         node<T> *newNode(size_t key){
             node<T> *n = new node<T>;
@@ -131,10 +131,12 @@ class AVL
             }
         }
         void insert(T key){
-            node<T> *temp = root;
+            node<T> *temp = _root;
             node<T> *prev = temp;
-            if (root == NULL){
-                root = newNode(key);
+
+            _size++;
+            if (_root == NULL){
+                _root = newNode(key);
                 return ;
             }
             while (temp != NULL){
