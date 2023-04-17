@@ -1,4 +1,4 @@
-# Ft_continers
+# Ft_containers
 Ft_continers is a project i have worked during my studies. This project is about re-implementing the vector container from C++.
 # Vector
 The C++ Standard Library vector class is a class template for sequence containers. A vector stores elements of a given type in a linear arrangement, 
